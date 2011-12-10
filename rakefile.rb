@@ -18,14 +18,16 @@ task :default => [:build]
 CLEAN.add(ENV['WORKSPACE'] + '/dist/')
 CLEAN.add(ENV['WORKSPACE'] + '/build/')
 
-desc "One line task description"
+desc '[build]'
 task :build => [:clean, :init, :dist] do
 end
 
+desc '[init]'
 task :init do
   FileUtils.mkdir_p( ENV['WORKSPACE'] + '/build/logs')
 end
 
+desc '[dist]'
 task :dist do
   FileUtils.mkdir(ENV['WORKSPACE'] + '/dist')
   fileList = FileList.new(ENV['WORKSPACE'] + '/**').exclude(*dist_exclude)
