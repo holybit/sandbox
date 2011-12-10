@@ -12,7 +12,7 @@ dist_exclude = [ './',
               ]
 
 task :dist => :clean do
-    puts #{WORKSPACE}
+    puts "workspace - #{WORKSPACE}"
     FileUtils.mkdir('dist')
     fileList = FileList.new(WORKINGDIR).exclude(*dist_exclude)
     #dirList = FileList.new(WORKINGDIR + '/**/').exclude('./', './dist/', './offline/')
