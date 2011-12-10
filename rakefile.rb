@@ -1,7 +1,7 @@
 require 'rake/clean'
 
 # for local testing only
-ENV['WORKSPACE'] = '/Users/heathercrotty/git/sandbox'
+#ENV['WORKSPACE'] = '/Users/heathercrotty/git/sandbox'
 
 dist_exclude = [ 
                  '**/build.xml',
