@@ -1,40 +1,36 @@
 require 'rake/clean'
-require 'Find'
 
-WORKINGDIR = './**'
+# for local testing only
+ENV['WORKSPACE'] = '/Users/heathercrotty/git/sandbox'
 
-CLEAN.add('./dist/')
-dist_exclude = [ './',
-                './build',
-                'build.xml',
-                './dist',
-                './offline'
-              ]
+dist_exclude = [ 
+                 '**/build.xml',
+                 '**/build',
+                 '**/dist',
+                 '**/offline',
+                 '**/rakefile.rb',
+                 '**/test'
+               ]
 
-task :dist => :clean do
-    puts ENV['WORKSPACE']
-    FileUtils.mkdir('dist')
-    fileList = FileList.new(WORKINGDIR).exclude(*dist_exclude)
-    #dirList = FileList.new(WORKINGDIR + '/**/').exclude('./', './dist/', './offline/')
-    #dirList = FileList.new(WORKINGDIR + '/**/').exclude(*dist_exclude)
-    #pathList = Find.find(WORKINGDIR)
-    #fileList = FileList.new(WORKINGDIR + '/**')
-    fileList.each do |file|
-        #if File.directory?(path)
-            #puts "path - #{path}"
-            #next
-            #dist_exclude.each do |pattern|
-                #puts "pattern - #{pattern}"
-                #if path.match(/#{pattern}/i)
-                    puts file 
-                #end
-            #end
-        #end
-    end
-    #fileList.each do |file|
-            #FileUtils.cp_r dir, './dist', :verbose => true, :preserve => true
-        #if ! File.exists?(file)
-            #puts file
-        #end
-    #end
+# tasks
+task :default => [:build]
+
+CLEAN.add(ENV['WORKSPACE'] + '/dist/')
+CLEAN.add(ENV['WORKSPACE'] + '/build/')
+
+desc "One line task description"
+task :build => [:clean, :init, :dist] do
+end
+
+task :init do
+  FileUtils.mkdir_p( ENV['WORKSPACE'] + '/build/logs')
+end
+
+task :dist do
+  FileUtils.mkdir(ENV['WORKSPACE'] + '/dist')
+  fileList = FileList.new(ENV['WORKSPACE'] + '/**').exclude(*dist_exclude)
+  fileList.each do |file|
+    #puts file
+    FileUtils.cp_r file, ENV['WORKSPACE'] + '/dist', :preserve => true
+  end
 end
