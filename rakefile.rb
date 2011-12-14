@@ -2,6 +2,7 @@
 # If you need to run locally set following Jenkins environment variables:
 # export WORKSPACE='/home/USER/git/foo'
 
+require 'open4'
 require 'rake/clean'
 
 # constants
@@ -25,8 +26,8 @@ dist_exclude = [
                  '**/test'
                ]
 
-#def rsync(arg1, arg2)
-#end
+def rsync(arg1, arg2)
+end
 
 # tasks
 task :default => [:build]
