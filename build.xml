@@ -1,0 +1,36 @@
+<project basedir="." name="sandbox">
+    <property name="src.dir" value="${basedir}/src/test"/>
+    <property name="classes.dir" value="${basedir}/target/classes"/>
+    <property name="lib.dir" value="${basedir}/lib"/>
+    <property name="build.dir" value="${basedir}/build"/>
+    <property name="sandbox.jar" value="${classes.dir}/sandbox.jar"/>
+
+    <path id="sandbox.classpath">
+        <file file="${sandbox.jar}"/>
+        <fileset dir="${lib.dir}">
+            <include name="*.jar" />
+        </fileset>
+    </path>
+
+    <target name="clean" description="cleans build output">
+        <delete dir="${classes.dir}" quiet="true" includeemptydirs="true"/>
+        <delete dir="${build.dir}" quiet="true" includeemptydirs="true"/>
+    </target>
+
+    <target name="build" description="sets up the environment for test execution">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${build.dir}"/>
+        <javac debug="true"
+               srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               includeAntRuntime="false"
+               classpathref="sandbox.classpath"/>
+        <jar basedir="${classes.dir}" jarfile="${sandbox.jar}"/>
+    </target>
+
+    <target name="run-example" description="run command-line example">
+        <java classname="net.qaautomation.examples.${example}"
+                failonerror="true"
+                classpathref="sandbox.classpath"/>
+    </target>
+</project>
