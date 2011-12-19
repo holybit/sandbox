@@ -29,7 +29,7 @@
     </target>
 
     <target name="run-example" description="run command-line example">
-        <java classname="net.qaautomation.examples.${example}"
+        <java classname="com.returnpath.poma.selenium.${example}"
                 failonerror="true"
                 classpathref="sandbox.classpath"/>
     </target>
