@@ -30,7 +30,18 @@
 
     <target name="run-example" description="run command-line example">
         <java classname="com.returnpath.poma.selenium.${example}"
-                failonerror="true"
-                classpathref="sandbox.classpath"/>
+              failonerror="true"
+              classpathref="sandbox.classpath"/>
+    </target>
+
+    <target name="runTest" description="Run test" >
+        <echo>Running Test...</echo>
+        <taskdef resource="testngtasks" classpath="lib/testng-6.3.1.jar"/>
+        <testng outputDir="${build.dir}"
+                haltonfailure="true"
+                useDefaultListeners="false"
+                classpathref="lib/">
+        <classfileset dir="${classes.dir}" includes="**/*.class" />
+        </testng>
     </target>
 </project>
