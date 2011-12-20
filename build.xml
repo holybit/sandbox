@@ -38,9 +38,8 @@
         <echo>Running Test...</echo>
         <taskdef resource="testngtasks" classpath="lib/testng-6.3.1.jar"/>
         <testng outputDir="${build.dir}"
-                haltonfailure="true"
-                useDefaultListeners="false"
-                classpathref="lib/">
+                haltonfailure="true">
+        <xmlfileset dir="test" includes="testng.xml" />
         <classfileset dir="${classes.dir}" includes="**/*.class" />
         </testng>
     </target>

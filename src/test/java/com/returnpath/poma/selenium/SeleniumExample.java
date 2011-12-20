@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
+@Test
 public class SeleniumExample {
     public static void main(String args[]) throws Exception {
         URL server = new URL("http://localhost:4444/wd/hub/");
