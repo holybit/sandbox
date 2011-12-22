@@ -17,30 +17,37 @@
         <delete dir="${build.dir}" quiet="true" includeemptydirs="true"/>
     </target>
 
-    <target name="build" description="sets up the environment for test execution">
+    <target name="build" depends="clean" description="sets up the environment for test execution">
         <mkdir dir="${classes.dir}"/>
         <mkdir dir="${build.dir}"/>
         <javac debug="true"
-               srcdir="${src.dir}"
-               destdir="${classes.dir}"
-               includeAntRuntime="false"
-               classpathref="sandbox.classpath"/>
+            srcdir="${src.dir}"
+            destdir="${classes.dir}"
+            includeAntRuntime="false"
+            classpathref="sandbox.classpath"/>
         <jar basedir="${classes.dir}" jarfile="${sandbox.jar}"/>
     </target>
 
     <target name="run-example" description="run command-line example">
         <java classname="com.returnpath.poma.selenium.${example}"
-              failonerror="true"
-              classpathref="sandbox.classpath"/>
+            failonerror="true"
+            classpathref="sandbox.classpath"/>
     </target>
 
-    <target name="runTest" description="Run test" >
+    <target name="runTest" description="Run test">
         <echo>Running Test...</echo>
-        <taskdef resource="testngtasks" classpath="lib/testng-6.3.1.jar"/>
-        <testng outputDir="${build.dir}"
-                haltonfailure="true">
-        <xmlfileset dir="test" includes="testng.xml" />
-        <classfileset dir="${classes.dir}" includes="**/*.class" />
+        <taskdef resource="testngtasks" classpath="${lib.dir}/testng-6.3.1.jar"/>
+        <testng classpathref="sandbox.classpath"
+            outputDir="${build.dir}"
+            haltOnFailure="true" verbose="10">
+            <classfileset dir="${classes.dir}" includes="**/*Test.class" />
         </testng>
+
+        <!--<taskdef resource="testngtasks" classpath="lib/testng-6.3.1.jar"/>-->
+        <!--<testng outputDir="${build.dir}"-->
+                <!--haltonfailure="true">-->
+        <!--<xmlfileset dir="test" includes="testng.xml" />-->
+        <!--<classfileset dir="${classes.dir}" includes="**/*.class" />-->
+        <!--</testng>-->
     </target>
 </project>

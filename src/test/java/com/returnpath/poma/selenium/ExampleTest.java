@@ -8,18 +8,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
-@Test
-public class SeleniumExample {
+@Test(alwaysRun = true)
+public class ExampleTest {
     public static void main(String args[]) throws Exception {
         URL server = new URL("http://localhost:4444/wd/hub/");
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("firefox");
+        capabilities.setBrowserName("chrome");
+        //capabilities.setBrowserName("firefox");
         capabilities.setJavascriptEnabled(true);
         WebDriver driver = new RemoteWebDriver(server, capabilities);
 
