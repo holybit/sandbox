@@ -2,7 +2,7 @@
 # If you need to run locally set following Jenkins environment variables:
 # export WORKSPACE='/home/USER/git/foo'
 
-require 'open4'
+#require 'open4'
 require 'rake/clean'
 
 # constants
@@ -15,18 +15,25 @@ STAGE_CI_HOST = 'stage-ci.returnpath.net'
 CLEAN.add(DIST)
 CLEAN.add(BUILD)
 
-dist_exclude = [ 
-                 '**/build.xml',
-                 '**/build',
-                 '**/dist',
-                 '**/hudsonBuild.properties',
-                 '**/logs',
-                 '**/offline',
-                 '**/rakefile.rb',
-                 '**/test'
-               ]
+dist = [ 
+        'documentroot',
+        'includes',
+        'README',
+       ]
 
-def rsync(arg1, arg2)
+def deploy
+  status =
+    Open4::popen4("sh") do |pid, stdin, stdout, stderr|
+      stdin.puts "echo 42.out"
+      stdin.puts "echo 42.err 1>&2"
+      stdin.close
+
+      puts "pid        : #{ pid }"
+      puts "stdout     : #{ stdout.read.strip }"
+      puts "stderr     : #{ stderr.read.strip }"
+    end
+      puts "status     : #{ status.inspect }"
+      puts "exitstatus : #{ status.exitstatus }"
 end
 
 # tasks
@@ -41,9 +48,13 @@ task :init do
 end
 
 task :dist do
-  fileList = FileList.new(ENV['WORKSPACE'] + '/**').exclude(*dist_exclude)
+  fileList = Dir[*dist]
   fileList.each do |file|
-    #puts file
+    puts file
     FileUtils.cp_r file, DIST, :preserve => true
   end
+end
+
+task :deploy do
+
 end
