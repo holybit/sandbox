@@ -44,8 +44,6 @@ def deploy(src='dist/', user='cmuser', host='test', dest)
 
   if ! ENV['RP_BUILD_TEST'].nil?
     dest = '/tmp/rsync_test'
-    rhost = 'localhost'
-    user = ENV['USER']
   elsif host == 'ci'
     dest = '/usr/local/stage/test/' + dest
     rhost = 'stage.tst.returnpath.net'
