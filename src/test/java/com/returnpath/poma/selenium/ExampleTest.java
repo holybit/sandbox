@@ -19,11 +19,13 @@ public class ExampleTest {
     public static void main(String args[]) throws Exception {
         URL server = new URL("http://localhost:4444/wd/hub/");
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setBrowserName("chrome");
+        WebDriver driver = new FirefoxDriver();
+
+        //DesiredCapabilities capabilities = new DesiredCapabilities();
+        //capabilities.setBrowserName("chrome");
         //capabilities.setBrowserName("firefox");
-        capabilities.setJavascriptEnabled(true);
-        WebDriver driver = new RemoteWebDriver(server, capabilities);
+        //capabilities.setJavascriptEnabled(true);
+        //WebDriver driver = new RemoteWebDriver(server, capabilities);
 
         driver.get("http://www.google.com");
         WebElement element = driver.findElement(By.name("q"));
@@ -31,7 +33,7 @@ public class ExampleTest {
         element.submit();
 
         System.out.println("Page title is: " + driver.getTitle());
-        
+
         // Page rendered dynamically with JavaScript
         // Wait for the page to load, timeout after x seconds
         (new WebDriverWait(driver, 2)).until(new ExpectedCondition<Boolean>() {
@@ -41,7 +43,7 @@ public class ExampleTest {
         });
 
         System.out.println("Page title is: " + driver.getTitle());
-        
+
         driver.quit();
     }
 }
