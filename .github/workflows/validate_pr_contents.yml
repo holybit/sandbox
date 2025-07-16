@@ -1,0 +1,37 @@
+name: Validate PR metadata
+on:
+pull_request:
+types:
+- opened
+- edited
+- synchronize
+
+jobs:
+validate-description:
+name: Validate description
+runs-on: ubuntu-latest
+steps:
+- name: Fetch PR Template
+run: |
+curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -s "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/main/.github/PULL_REQUEST_TEMPLATE.md" -o pr_template.txt
+- name: Compare PR Description and Template
+run: |
+jq --raw-output ".pull_request.body" "$GITHUB_EVENT_PATH" > pr_body.txt
+echo "PR template:"
+echo "--------------------------"
+cat pr_template.txt
+echo
+echo "PR body:"
+echo "--------------------------"
+cat pr_body.txt
+echo
+echo "========================================================"
+echo
+DIFF_COUNT=$(diff -y --suppress-common-lines pr_body.txt pr_template.txt | wc -m)
+echo "The PR description is $DIFF_COUNT characters different from the template."
+if [ "$DIFF_COUNT" -lt 20 ]; then
+echo "PR description is too similar to the template."
+exit 1
+else
+echo "PR description is sufficiently different from the template."
+fi
