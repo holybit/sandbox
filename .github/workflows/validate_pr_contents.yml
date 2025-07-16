@@ -7,7 +7,6 @@ on:
       - synchronize
 
 jobs:
-  name: Validate Description and Jira URL
   runs-on: ubuntu-latest
   steps:
   - name: Fetch PR Template
