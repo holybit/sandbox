@@ -9,6 +9,7 @@ jobs:
     - name: Fetch PR Template
       run: |
         curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -s "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/main/.github/PULL_REQUEST_TEMPLATE.md" -o pr_template.txt
+        cat pr_template.txt
     - name: Compare PR Description and Template
       run: |
         jq --raw-output ".pull_request.body" "$GITHUB_EVENT_PATH" > pr_body.txt
